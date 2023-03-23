@@ -99,8 +99,25 @@
             border: 4px solid rgba(0, 0, 0, 0.404);
             padding: 10px;
         }
+        .input-container {
+          font-size: 2em;
+          font-weight: bold;
+          color: white;
+          background-color: #515551;
+          width: 25%;
+        }
+        .input-container {
+          font-size: 2em;
+          font-weight: bold;
+          color: white;
+          background-color: #515551;
+          width: 25%;
+        }
 
     </style>
+    <div class="input-container">
+        <span>Номер компьютера: </span><span id="Input_value"></span>
+    </div>
     <div class="container">
         <h1 class="title" id="number"></h1>
 		<div class="item_btn">
@@ -121,13 +138,15 @@
     <script>
 
     const computerNumber = window.prompt('Введите номер вашего компьютера:');
-    
+    const inputValueElement = document.getElementById('Input_value');
+    inputValueElement.textContent = computerNumber;
+
     const numbers = [];
     const userNumber = parseInt(computerNumber);
 
     if (userNumber == 36) {
             numbers.push(
-                '79124027440',
+                '79501305982',
 '79028359255',
 '79146937500',
 '79174485906',
@@ -180,7 +199,7 @@
         );
     } else if(userNumber == 37) {
             numbers.push(
-		    '79501305982',
+                '79124027440',
 '79055641039',
 '79131643262',
 '79299674239',
