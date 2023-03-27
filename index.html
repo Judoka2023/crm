@@ -9,9 +9,9 @@
 <body>
     <style>
         body {
-            background-image: url("https://s0.rbk.ru/v6_top_pics/media/img/8/84/756528599758848.jpg");
-            background-size: cover;
-        }
+        background-image: url("https://s0.rbk.ru/v6_top_pics/media/img/8/84/756528599758848.jpg");
+        background-size: cover;    
+}
         .container {
             position: absolute;
             top: 50%;
@@ -19,7 +19,7 @@
             transform: translate(-50%, -50%);
         }
         .btn {
-            background-color: #515551;
+            background-color: #3e3f44c4;
             color: white;
             font-size: 16px;
             padding: 10px 20px;
@@ -33,7 +33,7 @@
             background-color: #000000;
         }
         .btn2 {
-            background-color: #515551;
+            background-color: #3e3f44c4;
             color: white;
             font-size: 16px;
             padding: 10px 20px;
@@ -47,7 +47,7 @@
             background-color: #000000;
         }
         .btn3 {
-            background-color: #515551;
+            background-color: #3e3f44c4;
             color: white;
             font-size: 16px;
             padding: 10px 20px;
@@ -60,22 +60,8 @@
         .btn3:hover {
             background-color: #000000;
         }
-        .btn4 {
-            background-color: #515551;
-            color: white;
-            font-size: 16px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;  
-            margin: 20px 0;
-        }
-        .btn4:hover {
-            background-color: #000000;
-        }
         .prozvon {
-            background-color: #515551;
+            background-color: #3e3f44c4;
             color: white;
             font-size: 16px;
             padding: 10px 20px;
@@ -87,14 +73,14 @@
         }
         .p_col_number{
             padding: 10px;
-            background-color: #515551;
+            background-color: #3e3f44c4;
 			color: hsl(112, 48%, 94%); /* Устанавливаем цвет текста */
             border: 4px solid rgba(0, 0, 0, 0.404);
             padding: 10px;
-      }
-      .title{
+        }
+        .title{
             padding: 10px;
-            background-color: #515551;
+            background-color: #3e3f44c4;
 			color: hsl(112, 48%, 94%); /* Устанавливаем цвет текста */
             border: 4px solid rgba(0, 0, 0, 0.404);
             padding: 10px;
@@ -103,38 +89,65 @@
           font-size: 2em;
           font-weight: bold;
           color: white;
-          background-color: #515551;
+          background-color: #3e3f44c4;
           width: 25%;
         }
-        .input-container {
-          font-size: 2em;
-          font-weight: bold;
-          color: white;
-          background-color: #515551;
-          width: 20%;
+    
+        .doz {
+            background-color: #3e3f44c4;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            margin: 20px 0;
+        }
+        .doz:hover {
+            background-color: #000000;
+        }
+        .nedoz {
+            background-color: #3e3f44c4;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            margin: 20px 0;
+        }
+        .nedoz:hover {
+            background-color: #000000;
         }
 
     </style>
+    
+    
     <div class="input-container">
         <span>Номер компа: </span><span id="Input_value"></span>
+        <div id="missed-calls">Недоз: 0</div>
+        <div id="answered-calls">Доз: 0</div>
     </div>
     <div class="container">
         <h1 class="title" id="number"></h1>
 		<div class="item_btn">
-		  <button class="btn" id="call-btn" style="margin-top: -60px;">Вызов</button>
-		  <button class="btn2" id="next-btn" style="margin-top: -60px;">Следующий номер</button>
-		  <button class="btn3" id="copy-btn" style="margin-top: -60px;">Копировать номер</button>
-          <button class="btn4" id="nextx-btn" style="margin-top: -60px;">Пролистать 10 номеров</button>
+            <button class="btn" id="call-btn" style="margin-top: -60px;">Вызов</button>
+            <button  class= "nedoz" id="answered-call-btn"style="margin-top: -60px;">Дозвон</button>
+            <button class= "doz" id="missed-call-btn"style="margin-top: -60px;">Недозвон</button>
+            <button class="btn3" id="copy-btn" style="margin-top: -60px;">Копировать номер</button>
 		</div>
         <h2 class="p_col_number" id="remaining-numbers"></h2>
         <form class="prozvon">
-            <label for="phone-number">Введите номер телефона:</label>
+            <label for="phone-number"></label>
             <input type="text" id="phone-number" name="phone-number" placeholder="Введите номер телефона">
             <button type="submit" id="call-btn">Позвонить в WhatsApp</button>
         </form>
 
         
     </div>
+    
     <script>
 
     const computerNumber = window.prompt('Введите номер вашего компьютера:');
@@ -144,7 +157,7 @@
     const numbers = [];
     const userNumber = parseInt(computerNumber);
 
-if (userNumber == 36) {
+        if (userNumber == 36) {
     numbers.push(
         '79273394949',
 '79514737671',
@@ -2464,7 +2477,58 @@ else if(userNumber == 63) {
 // )
 // } 
 
-	    
+        let missedCalls = 0;
+        let answeredCalls = 0;
+        const missedCallBtn = document.getElementById('missed-call-btn');
+        const answeredCallBtn = document.getElementById('answered-call-btn');
+        const missedCallsEl = document.getElementById('missed-calls');
+        const answeredCallsEl = document.getElementById('answered-calls');
+
+        missedCallBtn.addEventListener('click', function() {
+            if (currentNumber < 1) {
+            missedCalls = 0
+            }
+            else {missedCalls++;
+            missedCallsEl.textContent = `Недоз: ${missedCalls}`;
+        }});
+
+        missedCallBtn.addEventListener('click', function() {
+            if (numbers.length > 0) {
+                currentNumber = numbers.shift();
+                localStorage.setItem('currentNumber', currentNumber);
+
+                updateNumber();
+                } else {
+                    currentNumber = null;
+                    localStorage.removeItem('currentNumber');
+
+                    updateNumber();
+                }
+            }
+        );
+
+        answeredCallBtn.addEventListener('click', function() {
+            if (currentNumber < 1) {
+            missedCalls = 0
+            }
+            else {answeredCalls++;
+            answeredCallsEl.textContent = `Доз: ${answeredCalls}`;
+        }});
+        answeredCallBtn.addEventListener('click', function() {
+            if (numbers.length > 0) {
+                currentNumber = numbers.shift();
+                localStorage.setItem('currentNumber', currentNumber);
+
+                updateNumber();
+                } else {
+                    currentNumber = null;
+                    localStorage.removeItem('currentNumber');
+
+                    updateNumber();
+                }
+            }
+        );
+            
         let currentNumber = null;
 		localStorage.removeItem('currentNumber');
 		const lastNumber = localStorage.getItem('currentNumber');
@@ -2484,7 +2548,7 @@ else if(userNumber == 63) {
             if (currentNumber !== null) {
                 numberEl.textContent = `Номер: ${currentNumber}`;
             } else if (numbers.length > 0) {
-                numberEl.textContent = 'Нажмите на кнопку!)';
+                numberEl.textContent = 'Нажми на Дозвон';
             } else {
                 numberEl.textContent = 'Номера закончились';
             }
@@ -2498,21 +2562,6 @@ else if(userNumber == 63) {
 		        }
 		    }
         );
-		nextBtn.addEventListener('click', function() {
-            if (numbers.length > 0) {
-                currentNumber = numbers.shift();
-                localStorage.setItem('currentNumber', currentNumber);
-
-                updateNumber();
-                } else {
-                    currentNumber = null;
-                    localStorage.removeItem('currentNumber');
-
-                    updateNumber();
-                }
-            }
-        );
-
 		updateNumber();
 
             copyBtn.addEventListener('click', function() {
@@ -2530,20 +2579,6 @@ else if(userNumber == 63) {
                 numberEl.style.color = 'white';
             }, 0200);
         });
-
-        nextxBtn.addEventListener('click', function() {
-            for (let i = 0; i < 10; i++) {
-                if (numbers.length > 0) {
-                    currentNumber = numbers.shift();
-                    localStorage.setItem('currentNumber', currentNumber);
-                } else {
-                    currentNumber = null;
-                    localStorage.removeItem('currentNumber');
-                    break;
-                }
-        }
-        updateNumber();
-    });
         const form = document.querySelector('form');
         const phoneNumberEl = document.getElementById('phone-number');
         form.addEventListener('submit', function(event) {
