@@ -329,7 +329,7 @@
         answeredCallBtn.addEventListener('click', function() {
             var totalCalls = calculateTotalCalls(missedCalls, answeredCalls);
             var percentage = calculatePercentage(answeredCalls, totalCalls);
-            if (totalCalls > 12) {
+            if (totalCalls > 8) {
                 if (percentage <= 35) {
                     answeredCallsEl.style.color = "red";
             }   else if (percentage > 35 && percentage < 55) {
@@ -338,14 +338,6 @@
                     answeredCallsEl.style.color = "lightgreen";
             }
         }});
-
-        answeredCallBtn.addEventListener('click', function() {
-            var totalCalls = calculateTotalCalls(missedCalls, answeredCalls);
-            var percentage = calculatePercentage(answeredCalls, totalCalls);
-            if (totalCalls > 12) {
-                if (percentage <= 30) {
-                    location.reload();
-                }}})
 
         missedCallBtn.addEventListener('click', function() {
             if (currentNumber < 1) {
@@ -373,7 +365,7 @@
         missedCallBtn.addEventListener('click', function() {
             var totalCalls = calculateTotalCalls(missedCalls, answeredCalls);
             var percentage = calculatePercentage(answeredCalls, totalCalls);
-            if (totalCalls > 12) {
+            if (totalCalls > 8) {
                 if (percentage <= 35) {
                     answeredCallsEl.style.color = "red";
             }   else if (percentage > 35 && percentage < 55) {
@@ -382,14 +374,6 @@
                     answeredCallsEl.style.color = "lightgreen";
             }
             }});
-
-        missedCallBtn.addEventListener('click', function() {
-        var totalCalls = calculateTotalCalls(missedCalls, answeredCalls);
-        var percentage = calculatePercentage(answeredCalls, totalCalls);
-         if (totalCalls > 12) {
-             if (percentage <= 30) {
-                location.reload();
-        }}})
           
         let currentNumber = null;
 		localStorage.removeItem('currentNumber');
