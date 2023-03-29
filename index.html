@@ -389,15 +389,16 @@
         const copyBtn = document.getElementById('copy-btn');
         const remainingNumbersEl = document.getElementById('remaining-numbers');
 
-        function updateNumber() {
+     function updateNumber() {
         if (currentNumber != null) {
             numberEl.textContent = `Номер: ${currentNumber}`;
+            remainingNumbersEl.textContent = `Осталось: ${numbers.length}`;
         } else if (answeredCalls == 0) {
             numberEl.textContent = 'Нажми на Дозвон';
         } else {
             numberEl.textContent = 'Номера закончились';
-        }
             remainingNumbersEl.textContent = `Осталось: ${numbers.length}`;
+        }   
         }
 
         callBtn.addEventListener('click', function() {
