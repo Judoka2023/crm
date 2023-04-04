@@ -9,14 +9,21 @@
 <body>
     <style>
         body {
-        background-image: url("https://superwatchman.com/wp-content/uploads/2019/02/51535246_116754502755126_6374613435470804440_n.jpg");
+        background-image: url("https://cdn.shopify.com/s/files/1/0207/2436/products/data_851fe8f0-5a9d-4d2c-b3b9-a6a6b6e98f6a_1100x.jpg?v=1618196942");
         background-size: cover;    
         }
         .container {
+            margin-bottom: -10px;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+        }
+        .container2 {
+            margin-bottom: -25px;
+        }
+        .container3 {
+            margin-bottom: -25px;
         }
         .btn {
             background-color: #3e3f44c4;
@@ -47,6 +54,8 @@
             background-color: #000000;
         }
         .prozvon {
+            margin-top: -15px;
+            margin-bottom: -35px;
             background-color: #3e3f44c4;
             color: white;
             font-size: 16px;
@@ -59,6 +68,7 @@
         }
         .p_col_number{
             padding: 10px;
+            margin-top: -15px;
             background-color: #3e3f44c4;
 			color: hsl(112, 48%, 94%); /* Устанавливаем цвет текста */
             border: 4px solid rgba(0, 0, 0, 0.404);
@@ -75,8 +85,8 @@
           font-size: 2em;
           font-weight: bold;
           color: white;
-          background-color: #3e3f44c4;
-          width: 25%;
+          background-color: #3e3f44b2;
+          width: 20%;
         }
         .doz {
             background-color: #3e3f44c4;
@@ -106,7 +116,21 @@
         .nedoz:hover {
             background-color: #000000;
         }
-
+        .btn2 {
+            background-color: #3e3f44c4;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            margin: 20px 0; 
+        }
+        .btn2:hover {
+            background-color: #000000;
+        }
+        
     </style>
         <div class="input-container">
             <span>Номер компа: </span><span id="Input_value"></span>
@@ -127,6 +151,43 @@
                 <input type="text" id="phone-number" name="phone-number" placeholder="Введите номер телефона">
                 <button type="submit" id="call-btn">Позвонить в WhatsApp</button>
             </form>
+              
+        <div class="container2">
+            <h1 class="title2" id="number2"></h1>
+            <div class="item_btn2">
+                <a href="http://q15.olllcrm.online/admin/" target="_blank">
+                    <button class="btn2" id="btn2" style="width: 120px;">CRM</button>
+                </a>
+                <a href="https://ipoteka.vtb.ru/phone/" target="_blank">
+                    <button class="btn3" id="btn3" style="width: 122px;" >Ипотека</button>
+                </a>
+                <a href="https://cl.vtb.ru/" target="_blank">
+                    <button class="btn3" id="btn4" style="width: 108px;" >Кредит</button>
+                </a>
+                <a href="https://online.vtb.ru/debit-card/step1/troika" target="_blank">
+                    <button class="btn3" id="btn5"  >Дебетовая</button>
+                </a>
+            </div>
+        </div>
+
+        <div class="container3">
+            <h1 class="title3" id="number3"></h1>
+            <div class="item_btn3">
+                <a href="https://www.tinkoff.ru/cardtocard/" target="_blank">
+                    <button class="btn3" id="btn6" style="margin-top: -60px; width: 120px;" >Tinkoff</button>
+                </a>
+                <a href="https://data.intelx.io/saverudata/#/?n=" target="_blank">
+                    <button class="btn3" id="btn7" style="margin-top: -60px;" >Saverudata</button>
+                </a>
+                <a href="https://www.spravportal.ru/Services/PhoneCodes/MobilePhoneInfo.aspx" target="_blank">
+                    <button class="btn3" id="btn8" style="margin-top: -60px;" >Spravportal</button>
+                </a>
+                <a href="https://t.me/+tBqg5IYDOOpkMTdi" target="_blank">
+                    <button class="btn3" id="btn9" style="margin-top: -60px;" >Telegram</button>
+                </a>
+            </div>
+        </div>
+              
         </div>
     
     <script>
@@ -138,7 +199,7 @@
     const numbers = [];
     const userNumber = parseInt(computerNumber);
 
-    fetch('https://raw.githubusercontent.com/Judoka2023/crm/main/num1.txt')
+    fetch('https://raw.githubusercontent.com/Judoka2023/crm/main/num2.txt')
     .then(response => response.text())
     .then(data => {
         const lines = data.split('\n');
