@@ -9,7 +9,7 @@
 <body>
     <style>
         body {
-        background-image: url("https://autoghid.ro/wp-content/uploads/2022/12/bugatti-chiron-pur-sport_100867422_h.jpg");
+        background-image: url("https://media.cnn.com/api/v1/images/stellar/prod/221027093949-01-pininfarina-battista-electric-supercar-review.jpg?c=16x9&q=h_720,w_1280,c_fill");
         background-size: cover;    
         }
         .container {
@@ -130,20 +130,48 @@
         .btn2:hover {
             background-color: #000000;
         }
-        
+        .undoBtn {
+            background-color: #3e3f44c4;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            margin: 20px 0;
+        }
+        .undoBtn:hover {
+            background-color: #000000;
+        }
+        .baseBtn {
+            background-color: #3e3f44c4;
+            color: white;
+            font-size: 26px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .baseBtn:hover {
+            background-color: #000000;
+        }
     </style>
         <div class="input-container">
             <span>Номер компа: </span><span id="Input_value"></span>
             <div id="missed-calls">Недоз: 0</div>
             <div id="answered-calls">Доз: 0</div>
         </div>
+        </div class="container">
         <div class="container">
             <h1 class="title" id="number"></h1>
             <div class="item_btn">
                 <button class="btn" id="call-btn" style="margin-top: -60px;">Вызов</button>
-                <button  class= "nedoz" id="answered-call-btn"style="margin-top: -60px;">Дозвон</button>
+                <button class= "nedoz" id="answered-call-btn"style="margin-top: -60px;">Дозвон</button>
                 <button class= "doz" id="missed-call-btn"style="margin-top: -60px;">Недозвон</button>
-                <button class="btn3" id="copy-btn" style="margin-top: -60px;">Копировать номер</button>
+                <button class="btn3" id="copy-btn" style="margin-top: -60px;">Копировать</button>
+                <button class="btn3" id="undoBtn" style="margin-top: -60px;">Назад</button>
             </div>
             <h2 class="p_col_number" id="remaining-numbers"></h2>
             <form class="prozvon">
@@ -162,10 +190,10 @@
                     <button class="btn3" id="btn3" style="width: 122px;" >Ипотека</button>
                 </a>
                 <a href="https://cl.vtb.ru/" target="_blank">
-                    <button class="btn3" id="btn4" style="width: 108px;" >Кредит</button>
+                    <button class="btn3" id="btn4" style="width: 122px;" >Кредит</button>
                 </a>
                 <a href="https://online.vtb.ru/debit-card/step1/troika" target="_blank">
-                    <button class="btn3" id="btn5"  >Дебетовая</button>
+                    <button class="btn3" id="btn5" style="width: 140px;"  >Дебетовая</button>
                 </a>
             </div>
         </div>
@@ -183,7 +211,7 @@
                     <button class="btn3" id="btn8" style="margin-top: -60px;" >Spravportal</button>
                 </a>
                 <a href="https://t.me/+tBqg5IYDOOpkMTdi" target="_blank">
-                    <button class="btn3" id="btn9" style="margin-top: -60px;" >Telegram</button>
+                    <button class="btn3" id="btn9" style="margin-top: -60px; width: 140px;" >Telegram</button>
                 </a>
             </div>
         </div>
@@ -195,6 +223,13 @@
         const computerNumber = window.prompt('Введите номер вашего компьютера:');
         const inputValueElement = document.getElementById('Input_value');
               inputValueElement.textContent = computerNumber;
+                         
+        const numberEl = document.getElementById('number');
+		const callBtn = document.getElementById('call-btn');
+		const nextBtn = document.getElementById('next-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const undoBtn = document.getElementById('undoBtn');
+        const remainingNumbersEl = document.getElementById('remaining-numbers');
 
     const numbers = [];
     const userNumber = parseInt(computerNumber);
@@ -335,11 +370,62 @@
             numbers.push(lines[i].trim());
         }
         }
-        console.log(numbers); // do something with the phone numbers
+// Отправляет базу numbers храниться в localStorage в формате JSON
+        localStorage.setItem('numbers', JSON.stringify(numbers));
+        
         })
+// Выводит ошибки (если есть) в консоль (ctrl+shift+j in chrome)        
         .catch(error => console.error(error));
 
+// Достает номера из localStorage и превращает из JSON в string
+        const storedNumbers = localStorage.getItem('numbers');
+        arrayNumbers = JSON.parse(storedNumbers);
 
+// Устанавливает индекс списка
+        let arrayIndex = 0;
+        arrayNumbers[arrayIndex]
+        
+// Устанавливает первый номер в списке текущим номером
+        let currentNumber = arrayNumbers[0];
+        console.log(currentNumber)
+        console.log(arrayNumbers)
+        
+
+// Возвращает предыдущий номер (кнопка "Назад")
+        function undo() {
+            currentNumber = arrayNumbers[--arrayIndex];
+            updateNumber()
+// + следит за цветом Доз/Недоз при нажатии "Назад"
+        var totalCalls = calculateTotalCalls(missedCalls, answeredCalls);
+        var percentage = calculatePercentage(answeredCalls, totalCalls);
+        if (totalCalls > 7) {
+            if (percentage <= 35) {
+                answeredCallsEl.style.color = "red";
+        }   else if (percentage > 35 && percentage < 55) {
+                answeredCallsEl.style.color = "yellow";
+        }   else {
+                answeredCallsEl.style.color = "lightgreen";
+        }
+        }
+        else {
+            answeredCallsEl.style.color = "white";
+        }
+        }
+
+// Кнопка "Назад"        
+        undoBtn.addEventListener('click',function() {
+            if (arrayIndex > 0) {
+                undo();
+            }
+                else {
+                doNothing();
+                }
+        })
+
+
+// Специально ничего не делает        
+        function doNothing() {
+        }
 
         let missedCalls = 0;
         let answeredCalls = 0;
@@ -350,43 +436,32 @@
         const missedCallsEl = document.getElementById('missed-calls');
         const answeredCallsEl = document.getElementById('answered-calls');
 
+// Считает общее кол-во звонков        
         function calculateTotalCalls(missedCalls, answeredCalls) {
             var totalCalls = missedCalls + answeredCalls;
             return totalCalls;
         }       
-       
+
+// Считает процент дозвона        
         function calculatePercentage(answeredCalls, totalCalls) {
             var percentage = (answeredCalls / totalCalls) * 100;
             return percentage;
         }
        
-       
-       
 
+// Отвечает за переключение на след номер после нажатия на "Доз"        
         answeredCallBtn.addEventListener('click', function() {
-            if (currentNumber < 1) {
-            missedCalls = 0
+            var totalCalls = calculateTotalCalls(missedCalls, answeredCalls);
+            if (totalCalls < 30) {
+            currentNumber = arrayNumbers[++arrayIndex];
+                updateNumber();
             }
             else {
-                answeredCalls++;
-                answeredCallsEl.textContent = `Доз: ${answeredCalls}`;
-        }});
-
-        answeredCallBtn.addEventListener('click', function() {
-            if (numbers.length > 0) {
-                currentNumber = numbers.shift();
-                localStorage.setItem('currentNumber', currentNumber);
-
-                updateNumber();
-                } else {
-                    currentNumber = null;
-                    localStorage.removeItem('currentNumber');
-
-                    updateNumber();
-                }
+                doNothing();
             }
-        );
+        });
 
+// Отвечает за смену цвета "Доз"
         answeredCallBtn.addEventListener('click', function() {
             var totalCalls = calculateTotalCalls(missedCalls, answeredCalls);
             var percentage = calculatePercentage(answeredCalls, totalCalls);
@@ -400,29 +475,20 @@
             }
         }});
 
-        missedCallBtn.addEventListener('click', function() {
-            if (currentNumber < 1) {
-            missedCalls = 0
-            }
-            else {missedCalls++;
-            missedCallsEl.textContent = `Недоз: ${missedCalls}`;
-        }});
 
+// Отвечает за переключение на след номер после нажатия на "Недоз"
         missedCallBtn.addEventListener('click', function() {
-            if (numbers.length > 0) {
-                currentNumber = numbers.shift();
-                localStorage.setItem('currentNumber', currentNumber);
-
+            var totalCalls = calculateTotalCalls(missedCalls, answeredCalls);
+            if (totalCalls < 30) {
+            currentNumber = arrayNumbers[++arrayIndex];
                 updateNumber();
-                } else {
-                    currentNumber = null;
-                    localStorage.removeItem('currentNumber');
-
-                    updateNumber();
-                }
             }
-        );
+            else {
+                doNothing();
+            }
+        });
 
+// Отвечает за смену цвета "Недоз"
         missedCallBtn.addEventListener('click', function() {
             var totalCalls = calculateTotalCalls(missedCalls, answeredCalls);
             var percentage = calculatePercentage(answeredCalls, totalCalls);
@@ -435,41 +501,21 @@
                     answeredCallsEl.style.color = "lightgreen";
             }
             }});
-          
-        let currentNumber = null;
-		localStorage.removeItem('currentNumber');
-		const lastNumber = localStorage.getItem('currentNumber');
-		if (lastNumber !== null) {
-		  currentNumber = Number(lastNumber);
-		  numbers.splice(numbers.indexOf(currentNumber.toString()), 1);
-		}
+ 
 
-        const numberEl = document.getElementById('number');
-		const callBtn = document.getElementById('call-btn');
-		const nextBtn = document.getElementById('next-btn');
-        const copyBtn = document.getElementById('copy-btn');
-        const remainingNumbersEl = document.getElementById('remaining-numbers');
 
+// Показывает текущий номер и сколько номеров осталось 
      function updateNumber() {
         if (currentNumber != null) {
             numberEl.textContent = `Номер: ${currentNumber}`;
-            remainingNumbersEl.textContent = `Осталось: ${numbers.length}`;
-        } else if (answeredCalls == 0) {
-            numberEl.textContent = 'Нажми на Дозвон';
+            remainingNumbersEl.textContent = `Осталось: ${30-arrayIndex}`;
         } else {
             numberEl.textContent = 'Номера закончились';
-            remainingNumbersEl.textContent = `Осталось: ${numbers.length}`;
+            remainingNumbersEl.textContent = `Осталось: ${0}`;
         }   
         }
 
-        callBtn.addEventListener('click', function() {
-		  if (currentNumber !== null) {
-			    window.location.href = `whatsapp://send/?phone=${currentNumber}	`;
-		        }
-		    }
-        );
-		updateNumber();
-
+// Код для кнопки копировать
         copyBtn.addEventListener('click', function() {
             const numberText = numberEl.textContent;
             const numberOnly = numberText.substring(numberText.indexOf(':') + 2);
@@ -479,13 +525,26 @@
             tempInput.select();
             document.execCommand('copy');
             document.body.removeChild(tempInput);
-
+// мигает цвет при нажатии
             numberEl.style.color = 'black';
             setTimeout(function() {
                 numberEl.style.color = 'white';
             }, 0200);
         });
 
+
+// Вызов в вотсап по введенному номеру
+        callBtn.addEventListener('click', function() {
+		  if (currentNumber !== null) {
+			    window.location.href = `whatsapp://send/?phone=${currentNumber}	`;
+		        }
+		    }
+        );
+		updateNumber();
+
+
+
+// Вызов в вотсап по введенному номеру часть 2
         const form = document.querySelector('form');
         const phoneNumberEl = document.getElementById('phone-number');
         form.addEventListener('submit', function(event) {
@@ -495,7 +554,10 @@
                 window.location.href = `whatsapp://send/?phone=${phoneNumber}`;
             }
         });
-        // Add event listener for key press
+
+
+
+// Нажатие кнопок клавишами энтер - вызов и пробел - копировать
         document.addEventListener('keydown', function(event) {
                 // Enter key
                 if (event.code === 'Enter') {
@@ -507,6 +569,52 @@
                 }
             }
         );
+
+
+
+// Следит за изменением значений Доз/Недоз + также при назатии кнопки "Назад" 
+
+        let changes = [];
+
+        answeredCallBtn.addEventListener('click', function() {
+            var totalCalls = calculateTotalCalls(missedCalls, answeredCalls);
+            if (totalCalls < 30 ) {
+            let change = { type: "answeredCalls", value: 1 };
+            answeredCalls += change.value;
+            answeredCallsEl.textContent = `Доз: ${answeredCalls}`;
+            changes.push(change);
+            }
+            else {
+                doNothing();
+            }
+        });
+
+        missedCallBtn.addEventListener('click', function() {
+            var totalCalls = calculateTotalCalls(missedCalls, answeredCalls);
+            if (totalCalls < 30 ) {
+            let change = { type: "missedCalls", value: 1 };
+            missedCalls += change.value;
+            missedCallsEl.textContent = `Недоз: ${missedCalls}`;
+            changes.push(change);
+            }
+            else {
+                doNothing();
+            }
+    });
+
+        undoBtn.addEventListener('click', function() {
+            if (changes.length > 0) {
+                let lastChange = changes.pop();
+                if (lastChange.type === "answeredCalls") {
+                answeredCalls -= lastChange.value;
+                answeredCallsEl.textContent = `Доз: ${answeredCalls}`;
+                } else if (lastChange.type === "missedCalls") {
+                missedCalls -= lastChange.value;
+                missedCallsEl.textContent = `Недоз: ${missedCalls}`;
+                }
+        }
+        });     
+
        
     </script>
 </body>
